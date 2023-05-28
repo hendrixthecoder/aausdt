@@ -12,7 +12,10 @@ export default {
         'my-silver': '#C3CDD0',
         'golden-yellow': '#EBAD40',
         'pale-blue': '#AADAEF',
-        'pale-yellow': '#FFD608'
+        'pale-yellow': '#FFD608',
+        'bright-purple': '#3B24BF',
+        'deep-blue': '#1219AF',
+        'deeper-blue': '#0F148C'
       }
     },
   },

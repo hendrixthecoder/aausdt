@@ -11,7 +11,7 @@
 </head>
 <body class="text-white">
     <div class="flex flex-col h-screen">
-        <nav class="flex justify-between p-5 bg-black text-white border-b">
+        <nav class="flex justify-between p-5 bg-black text-white">
             <div class="">
                 <img src="{{ asset('images/logo.png') }}" class="h-10 inline" alt="">
                 <span>AAUSDT</span>
@@ -26,8 +26,11 @@
         {{-- Includes start --}}
         @include('financing')
         @include('vip')
+        @if (Auth::check())
+            @include('account')
+        @endif
         {{-- Includes end --}}
-        <section class="flex-grow p-4 bg-black" id="home">
+        <section class="flex-grow p-4 bg-black" id="home"> 
             <section id="financing-port">
                 {{-- Financing starts here --}}
                 <div class="flex justify-between text-white mb-3">
@@ -123,10 +126,12 @@
                 <span class="material-icons block ">military_tech</span>
                 VIP
             </span>
+            @if (Auth::check())
             <span class="cursor-pointer hover:text-blue-700 nav" id="accountBtn">
                 <span class="material-icons block ml-5">account_circle</span>
                 Account
-            </span>
+            </span>   
+            @endif
         </div>
         <footer class="max-sm:hidden bg-gray-700" >
             laptop footer
@@ -137,30 +142,34 @@
     <script>
         $(document).ready(function () {
             $('#home').hide()
-            $('#vip').show()
+            $('#vip').hide()
             $('#financing').hide()
+            $('#account').show()
 
             $('#homeBtn').click(function () {
                 $('#financing').hide()
                 $('#vip').hide()
+                $('#account').hide()
                 $('#home').show()
             })
             $('#financingBtn').click(function () {
                 $('#home').hide()
                 $('#vip').hide()
+                $('#account').hide()
                 $('#financing').show()
             })
             $('#vipBtn').click(function () {
                 $('#home').hide()
                 $('#financing').hide()
+                $('#account').hide()
                 $('#vip').show()
             })
             $('#accountBtn').click(function () {
-                alert('clicked account')
+                $('#home').hide()
+                $('#financing').hide()
+                $('#vip').hide()
+                $('#account').show()
             })
-
-            let links = document.getElementsByClassName('nav')
-            $('#mobile-nav').click('')
 
         });
 

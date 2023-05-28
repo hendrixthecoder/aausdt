@@ -158,7 +158,9 @@ return [
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
          * Package Service Providers...
+         * 
          */
+        Monarobase\CountryList\CountryListServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -183,6 +185,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Countries' => Monarobase\CountryList\CountryListFacade::class,
     ])->toArray(),
 
 ];

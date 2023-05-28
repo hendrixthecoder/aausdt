@@ -1,12 +1,12 @@
 <section class="flex-grow p-4 bg-black hidden" id="financing">
-    <section id="balance">
+    <section id="financing-port">
         <div class="bg-my-ash w-full p-4 h-28 flex align-middle justify-between rounded-md sticky">
             <img src="{{ asset('images/logo.png') }}" alt="">
             <div class="flex flex-col gap-4">
                 <p class="text-orange-500">0.00 ≈ $0.00</p>
                 <p>Balance</p>
             </div>
-            <button class="bg-blue-700 h-10 px-2 rounded-md text-white">Login</button>
+            <a class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10" href="{{ route('userLoginPage') }}">Login</a>
         </div>
         <div class="my-2">
             <p>Products</p>
