@@ -4,9 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Wallet;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class UserActionController extends Controller
 {
@@ -43,13 +41,18 @@ class UserActionController extends Controller
                 $wallet->wallet_address_type = $validated['wallet_address_type'];
 
                 $wallet->save();
-        
+                
                 return back()->with('success', 'Wallet Updated Successfully!');
             }
-
         }
 
         return back()->with('error', 'Wallet not found');
+    }
 
+    public function walletDelete ($id) {
+        $wallet = Wallet::findOrFail($id);
+        $wallet->delete();
+
+        return back()->with('success', 'Wallet Deleted Successfully!');
     }
 }

@@ -16,4 +16,9 @@ class PageController extends Controller
         $wallets = $request->user()->wallets;
         return view('wallet', compact(['wallets']));
     }
+
+    public function renderDepositsPage (Request $request) {
+        $deposits = $request->user()->deposits;
+        return view('deposits', compact(['deposits']));
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\FundsController;
 use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\UserActionController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/wallet', [PageController::class, 'renderWalletsPage'])->name('userWalletsPage');
     Route::post('/wallet', [UserActionController::class, 'addWalletPost'])->name('postWalletAdd');
     Route::put('/wallet', [UserActionController::class, 'walletPut'])->name('putWalletAdd');
+    Route::delete('/wallet/{id}', [UserActionController::class, 'walletDelete'])->name('deleteWallet');
+
+    Route::get('/deposits', [PageController::class, 'renderDepositsPage'])->name('userDepositsPage');
+    Route::post('/deposits', [FundsController::class, 'createDeposit'])->name('createDepositUser');
 
 
     Route::get('/account-security', [PageController::class, 'secureAcccount'])->name('userSecureAccountPage');

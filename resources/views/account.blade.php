@@ -37,10 +37,10 @@
                 </div>
 
                 <div class="flex gap-4 justify-between text-xs">
-                    <div class="bg-deep-blue w-4/12 rounded-md text-center p-2">
+                    <a href="{{ route('userDepositsPage') }}" class="bg-deep-blue w-4/12 rounded-md text-center p-2">
                         <span class="material-icons">account_balance_wallet</span>
                         <p>Deposit</p>
-                    </div>
+                    </a>
                     <div class="bg-deep-blue w-4/12 rounded-md text-center p-2">
                         <span class="material-icons">local_atm</span>
                         <p>Withdraw</p>

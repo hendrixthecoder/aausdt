@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Questions</title>
+    <title>Wallets</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     @vite('resources/css/app.css')
@@ -65,10 +65,22 @@
                 <div class="bg-my-ash w-full p-4 rounded-md flex flex-col gap-4" id="">
                     <p>{{ $wallet->wallet_address_type }}</p>
                     <p>{{ $wallet->wallet_address }}</p>
-                    <button class="w-16 flex gap-1 text-xs" id="{{ $wallet->id }}" onclick="openModal()">
-                        <span class="material-icons text-xs">border_color</span>
-                        Edit
-                    </button>
+                    <div class="flex justify-between">
+                        <button class="w-16 flex gap-1 text-xs" id="{{ $wallet->id }}" data-modal="" onclick="openModal()">
+                            <span class="material-icons text-xs">border_color</span>
+                            Edit
+                        </button>
+                        <form action="{{ route('deleteWallet', ['id' => $wallet->id]) }}" id="delete{{ $wallet->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" value="{{ $wallet->id }}" name="id">
+                            <button class="w-16 flex text-xs" type="submit">
+                                <span class="material-icons text-xs">delete</span>
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
 
                 <dialog id="modal{{ $wallet->id }}" class="w-10/12 rounded-md shadow bg-my-ash">
@@ -125,6 +137,12 @@
             let modalId = event.target.parentElement.id
             let modal = document.getElementById(modalId)
             modal.close()
+        }
+
+        const deleteWallet = () => {
+            event.preventDefault()
+            let formId = event.target.parentElement.id
+            console.log(formId);
         }
     </script>
 </body>
