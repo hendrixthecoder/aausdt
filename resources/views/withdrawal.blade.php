@@ -21,7 +21,7 @@
             <div class="w-full mb-3 flex gap-4">
                 <img src="{{ asset('images/moneybag.png') }}" class="h-14" alt="">
                 <div class="flex flex-col gap-2">
-                    <p class="text-orange-400">0USDT ≈ $0</p>
+                    <p class="text-orange-400">{{ $balance }}USDT ≈ ${{ $balance }}</p>
                     <p>Balance(USDT)</p>
                 </div>
             </div>
@@ -32,11 +32,11 @@
         @endif
 
         @if ($errors->any())
-        <ul class="my-4">
-            @foreach ($errors->all() as $error)
-                <li class="bg-red-700 p-2 rounded-md">{{ $error }}</li>
-            @endforeach
-        </ul>
+            <ul class="my-4">
+                @foreach ($errors->all() as $error)
+                    <li class="bg-red-700 p-2 rounded-md">{{ $error }}</li>
+                @endforeach
+            </ul>
         @endif
 
         @if (Session::has('success'))

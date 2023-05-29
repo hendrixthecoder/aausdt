@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
+use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -54,5 +56,29 @@ class FundsController extends Controller
         }
 
         return back()->with('error', 'Trade Key Invalid!');
+    }
+
+    public function createTransfer (Request $request) {
+        $validated = $request->validate([
+            'account' => 'bail|required|alpha_num|exists:users,username',
+            'amount' => 'bail|required|numeric'
+        ]);
+
+        if($request->user()->balance() > $validated['amount']){
+
+            //avoiding the user sending money to themselves cuz wth💀
+            if($validated['account'] != $request->user()->username) {
+                $validated['sender_id'] = $request->user()->id;
+                $validated['receiver_id'] = User::where('username', $validated['account'])->first()->id;
+                
+                Transaction::create($validated);
+    
+                return back()->with('success', 'Transfer successful!');
+            }
+
+            return back()->with('error', 'You can only make external transfers!');
+        }
+
+        return back()->with('error', 'Insufficient funds!');
     }
 }

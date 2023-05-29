@@ -31,7 +31,7 @@
                 <div class="w-full mb-3 flex gap-4">
                     <img src="{{ asset('images/moneybag.png') }}" class="h-14" alt="">
                     <div class="flex flex-col gap-2">
-                        <p class="text-orange-400">0USDT ≈ $0</p>
+                        <p class="text-orange-400">{{ $balance }}USDT ≈ ${{ $balance }}</p>
                         <p>Balance</p>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                         <span class="material-icons">local_atm</span>
                         <p>Withdraw</p>
                     </a>
-                    <a href="" class="bg-deep-blue w-4/12 rounded-md text-center p-2">
+                    <a href="{{ route('userTransferPage') }}" class="bg-deep-blue w-4/12 rounded-md text-center p-2">
                         <span class="material-icons">payments</span>
                         <p>Transfer</p>
                     </a>

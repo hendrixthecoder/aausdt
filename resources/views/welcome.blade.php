@@ -141,10 +141,10 @@
 
     <script>
         $(document).ready(function () {
-            $('#home').hide()
+            $('#home').show()
             $('#vip').hide()
             $('#financing').hide()
-            $('#account').show()
+            $('#account').hide()
 
             $('#homeBtn').click(function () {
                 $('#financing').hide()

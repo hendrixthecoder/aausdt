@@ -26,6 +26,12 @@ class PageController extends Controller
     public function renderWithdrawalsPage (Request $request) : View {
         $wallets = $request->user()->wallets;
         $withdrawals = $request->user()->withdrawals;
-        return view('withdrawal', compact(['wallets', 'withdrawals']));
+        $balance = $request->user()->balance();
+        return view('withdrawal', compact(['wallets', 'withdrawals', 'balance']));
+    }
+
+    public function renderTransferPage (Request $request) : View {
+        $balance = $request->user()->balance();
+        return view('transfer', compact(['balance']));
     }
 }

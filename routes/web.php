@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\User\AuthController;
-use App\Http\Controllers\User\FundsController;
-use App\Http\Controllers\User\PageController;
-use App\Http\Controllers\User\UserActionController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\PageController;
+use App\Http\Controllers\User\FundsController;
+use App\Http\Controllers\User\UserActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    $request->user() ? $balance = $request->user()->balance() : $balance = 0;
+    return view('welcome', compact(['balance']));
 })->name('userHome');
 
 Route::get('/login', [AuthController::class, 'renderLoginPage'])->name('userLoginPage');
@@ -40,6 +42,9 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/withdrawals', [PageController::class, 'renderWithdrawalsPage'])->name('userWithdrawalsPage');
     Route::post('/withdrawals', [FundsController::class, 'createWithdrawal'])->name('createWithdrawalUser');
+
+    Route::get('/transfer', [PageController::class, 'renderTransferPage'])->name('userTransferPage');
+    Route::post('/transfer', [FundsController::class, 'createTransfer'])->name('userCreateTransfer');
 
 
     Route::get('/account-security', [PageController::class, 'secureAcccount'])->name('userSecureAccountPage');

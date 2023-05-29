@@ -3,7 +3,7 @@
         <div class="bg-my-ash w-full p-4 h-28 flex align-middle justify-between rounded-sm sticky">
             <img src="{{ asset('images/logo.png') }}" class="h-14" alt="">
             <div class="flex flex-col gap-4">
-                <p class="text-orange-500">0.00</p>
+                <p class="text-orange-500">{{ $balance }}</p>
                 <p>Balance(USDT)</p>
             </div>
             <button class="bg-blue-700 h-10 px-2 rounded-md text-white">Login</button>

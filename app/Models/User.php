@@ -58,5 +58,23 @@ class User extends Authenticatable
     public function withdrawals () : HasMany {
         return $this->hasMany(Withdrawal::class);
     }
+
+    public function getSuccessfulCredits () {
+        //get successful deposits and credit transactions
+        $deposits = $this->deposits()->where('status', 'Processed')->sum('amount');
+        $receivedTransfers = Transaction::where('receiver_id', $this->id)->sum('amount');
+        return $deposits + $receivedTransfers;
+    }
+
+    public function getSuccessfulDebits () {
+        //get successful withdrawals and debit transactions
+        $withdrawals = $this->withdrawals()->where('status', 'Processed')->sum('amount');
+        $exernalTransfers = Transaction::where('sender_id', $this->id)->sum('amount');
+        return $withdrawals + $exernalTransfers;
+    }
+
+    public function balance () {
+        return $this->getSuccessfulCredits() - $this->getSuccessfulDebits();
+    }
     
 }
