@@ -6,7 +6,7 @@
                 <p class="text-orange-500">{{ $balance }}</p>
                 <p>Balance(USDT)</p>
             </div>
-            <button class="bg-blue-700 h-10 px-2 rounded-md text-white">Login</button>
+            <a href="{{ route('userLoginPage') }}" class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10">Login</a>
         </div>
         <div class="flex flex-col gap-4 my-3">
             <div class="bg-dull-orange p-3 py-8 rounded-xl w-full flex justify-between text-sm">

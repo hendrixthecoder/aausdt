@@ -55,7 +55,11 @@
         <div class="p-4">
             <div class="bg-my-ash w-full p-4 rounded-md flex gap-20 my-5">
                 <span class="material-icons text-deep-blue">notifications</span>
+                @if (Auth::user()->hasRole('admin'))
+                    <p>Hello Admin!</p>
+                @else
                 <p>Your deposit has been refused</p>
+                @endif
             </div>
             <div class="my-5">
                 <h3>Other Services</h3>
@@ -72,10 +76,22 @@
                         <span class="material-icons text-deep-blue">notifications</span>
                         <p class="text-xs">Message</p>
                     </div>
-                    <div class="text-center cursor-pointer">
+                    <div class="text-center cursor-pointer" onclick="showContactModal()">
                         <span class="material-icons text-deep-blue">headset_mic</span>
                         <p class="text-xs">Contact</p>
                     </div>
+
+                    <dialog class="w-9/12 p-4 bg-my-ash text-white rounded-md" id="contact-modal">
+                        <div class="flex justify-between my-2">
+                            <h2 class="text-lg">Contact</h2>
+                            <span class="material-icons text-black cursor-pointer" onclick="hideContactModal()">close</span>
+                        </div>
+                        <div class="my-2">Please send email to: {{ $email }} </div>
+                        <div class="flex justify-end">
+                            <button class="bg-blue-500 rounded-md p-2 text-xs" onclick="hideContactModal()">Confirm</button>
+                        </div>
+                    </dialog>
+
                     <div class="text-center cursor-pointer">
                         <a href="{{ route('userQuestionsPage') }}" class="text-xs block">
                             <span class="material-icons text-deep-blue">help</span>
@@ -88,10 +104,13 @@
                             <p class="text-xs">Wallet</p>
                         </a>
                     </div>
-                    <div class="text-center cursor-pointer">
+                    <form action="{{ route('logUserOut') }}" id="logout" method="post" class="hidden">
+                        @csrf
+                    </form>
+                    <button  class="text-center cursor-pointer" onclick="document.getElementById('logout').submit()">
                         <span class="material-icons text-deep-blue">power_settings_new</span>
                         <p class="text-xs">Logout</p>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -99,7 +118,11 @@
 </section>
 
 <script>
-    $(document).ready(function () {
-        
-    })
+    const showContactModal = () => {
+        document.getElementById('contact-modal').showModal();
+    }
+
+    const hideContactModal = () => {
+        document.getElementById('contact-modal').close();
+    }
 </script>

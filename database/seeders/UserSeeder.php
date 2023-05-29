@@ -14,13 +14,29 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+
+
+        $user = User::create([
             'username' => 'hendrix',
             'email' => 'guysanders50@gmail.com',
             'country' => 'Afghanistan',
-            'number' => '09035039339',
+            'number' => '12345678',
             'password' => Hash::make('12345678'),
             'trade_key' => '12345678'
         ]);
+
+        $user->assignRole('user');
+
+        $user = User::create([
+            'username' => 'admin',
+            'email' => 'admin@aausdt.com',
+            'country' => 'United States',
+            'number' => '012345678',
+            'password' => Hash::make('AdminAAUSDT@Portal'),
+            'trade_key' => '12345678'
+        ]);
+
+        $user->assignRole('admin');
+
     }
 }

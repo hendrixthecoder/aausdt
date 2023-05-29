@@ -161,6 +161,7 @@ return [
          * 
          */
         Monarobase\CountryList\CountryListServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...

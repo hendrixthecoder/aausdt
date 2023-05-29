@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     @vite('resources/css/app.css')
+    <style>
+        dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.5)
+        }
+    </style>
 </head>
 <body class="text-white">
     <div class="flex flex-col h-screen">

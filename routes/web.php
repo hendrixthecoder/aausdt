@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminActionController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
@@ -19,8 +21,12 @@ use App\Http\Controllers\User\UserActionController;
 */
 
 Route::get('/', function (Request $request) {
+
+    $email = env('MAIL_FROM_ADDRESS');
+
+    //trick to set balance equal to zero for unauthenticated users
     $request->user() ? $balance = $request->user()->balance() : $balance = 0;
-    return view('welcome', compact(['balance']));
+    return view('welcome', compact(['balance','email']));
 })->name('userHome');
 
 Route::get('/login', [AuthController::class, 'renderLoginPage'])->name('userLoginPage');
@@ -46,7 +52,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/transfer', [PageController::class, 'renderTransferPage'])->name('userTransferPage');
     Route::post('/transfer', [FundsController::class, 'createTransfer'])->name('userCreateTransfer');
 
+    Route::post('logout', [AuthController::class, 'logout'])->name('logUserOut');
 
     Route::get('/account-security', [PageController::class, 'secureAcccount'])->name('userSecureAccountPage');
+
+    Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function () {
+        Route::get('/manage-withdrawals', [AdminPageController::class, 'renderWithdrawalsPage'])->name('adminManageWithdrawals');
+
+        Route::post('approve-deposit/{id}', [AdminActionController::class, 'approveDeposit'])->name('adminApproveDeposit');
+        Route::post('decline-withdrawal/{id}', [AdminActionController::class, 'declineDeposit'])->name('adminDeclineDeposit');
+    });
 });
 

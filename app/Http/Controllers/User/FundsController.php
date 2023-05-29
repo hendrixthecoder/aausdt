@@ -44,18 +44,25 @@ class FundsController extends Controller
             'trade_key' => 'bail|required|exists:users,trade_key'
         ]);
 
-        //validate the trade key, if trade key matches allow the transaction
-        if($validated['trade_key'] == $request->user()->trade_key){
-            $validated['user_id'] = $request->user()->id;
-            
-            $validated['status'] = 'Pending';
+        //check if user has sufficient funds to make a withdrawal
+        if($request->user()->balance() > $validated['amount']){
 
-            Withdrawal::create($validated);
+            //validate the trade key, if trade key matches allow the transaction
+            if($validated['trade_key'] == $request->user()->trade_key){
+                $validated['user_id'] = $request->user()->id;
+                
+                $validated['status'] = 'Pending';
+    
+                Withdrawal::create($validated);
+    
+                return back()->with('success', 'Withdrawal made successfully, wait for for approval!');
+            }
 
-            return back()->with('success', 'Withdrawal made successfully, wait for for approval!');
+            return back()->with('error', 'Trade Key Invalid!');
         }
+        
+        return back()->with('error', 'Insufficient funds!');
 
-        return back()->with('error', 'Trade Key Invalid!');
     }
 
     public function createTransfer (Request $request) {
