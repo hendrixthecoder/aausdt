@@ -41,14 +41,14 @@
                         <span class="material-icons">account_balance_wallet</span>
                         <p>Deposit</p>
                     </a>
-                    <div class="bg-deep-blue w-4/12 rounded-md text-center p-2">
+                    <a href="{{ route('userWithdrawalsPage') }}" class="bg-deep-blue w-4/12 rounded-md text-center p-2">
                         <span class="material-icons">local_atm</span>
                         <p>Withdraw</p>
-                    </div>
-                    <div class="bg-deep-blue w-4/12 rounded-md text-center p-2">
+                    </a>
+                    <a href="" class="bg-deep-blue w-4/12 rounded-md text-center p-2">
                         <span class="material-icons">payments</span>
                         <p>Transfer</p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

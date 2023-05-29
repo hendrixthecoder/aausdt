@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
+
 class PageController extends Controller
 {
     public function renderQuestionsPage () : View {
@@ -20,5 +21,11 @@ class PageController extends Controller
     public function renderDepositsPage (Request $request) {
         $deposits = $request->user()->deposits;
         return view('deposits', compact(['deposits']));
+    }
+
+    public function renderWithdrawalsPage (Request $request) : View {
+        $wallets = $request->user()->wallets;
+        $withdrawals = $request->user()->withdrawals;
+        return view('withdrawal', compact(['wallets', 'withdrawals']));
     }
 }

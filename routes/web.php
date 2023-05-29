@@ -38,6 +38,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/deposits', [PageController::class, 'renderDepositsPage'])->name('userDepositsPage');
     Route::post('/deposits', [FundsController::class, 'createDeposit'])->name('createDepositUser');
 
+    Route::get('/withdrawals', [PageController::class, 'renderWithdrawalsPage'])->name('userWithdrawalsPage');
+    Route::post('/withdrawals', [FundsController::class, 'createWithdrawal'])->name('createWithdrawalUser');
+
 
     Route::get('/account-security', [PageController::class, 'secureAcccount'])->name('userSecureAccountPage');
 });

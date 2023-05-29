@@ -31,7 +31,7 @@
                 </select>
             </div>
             <input type="text" required name="wallet_address" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Wallet Address">
-            <input type="text" required name="trade_key" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Trade Key">
+            <input type="password" required name="trade_key" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Trade Key">
             <input type="submit" value="Save" class="bg-deep-blue rounded-md text-white p-2 cursor-pointer">
         </form>
     </dialog>
@@ -98,7 +98,7 @@
                         </div>
                         <input type="hidden" name="id" value="{{ $wallet->id }}">
                         <input type="text" value="{{ $wallet->wallet_address }}" required name="wallet_address" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Wallet Address">
-                        <input type="text" required name="trade_key" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Trade Key">
+                        <input type="password" required name="trade_key" class="bg-my-ash text-white p-2 border rounded-md outline-none" placeholder="Trade Key">
                         <input type="submit" value="Save" class="bg-deep-blue rounded-md text-white p-2 cursor-pointer">
                     </form>
                 </dialog>

@@ -35,7 +35,6 @@
         @if (Session::has('success'))
             <div class="bg-green-700 p-2 rounded-md">{{ Session::get('success') }}</div>
         @endif
-
         <form action="" class="flex flex-col gap-3 my-3" method="post" enctype="multipart/form-data">
             @csrf
             <div class="flex gap-2">
@@ -86,6 +85,5 @@
         </table>
         @endif
     </div>
-
 </body>
 </html>
