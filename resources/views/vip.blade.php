@@ -1,17 +1,19 @@
 <section class="flex-grow p-4 bg-black hidden" id="vip">
     <section id="vip-port">
-        <div class="bg-my-ash w-full p-4 h-28 flex align-middle justify-between rounded-sm sticky">
+        <div class="bg-my-ash w-full p-4 h-28 flex align-middle justify-between rounded-md sticky">
             <img src="{{ asset('images/logo.png') }}" class="h-14" alt="">
             <div class="flex flex-col gap-4">
                 <p class="text-orange-500">{{ $balance }}</p>
                 <p>Balance(USDT)</p>
             </div>
-            <a href="{{ route('userLoginPage') }}" class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10">Login</a>
+            @if (!Auth::check())
+                <a href="{{ route('userLoginPage') }}" class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10">Login</a>
+            @endif
         </div>
-        <div class="flex flex-col gap-4 my-3">
-            <div class="bg-dull-orange p-3 py-8 rounded-xl w-full flex justify-between text-sm">
+        <div class="flex flex-col gap-4 my-3 ">
+            <div class="bg-dull-orange p-3 py-8 rounded-xl w-full flex justify-between text-sm max-sm:text-[10px]">
                 <img src="{{ asset('images/vi.png') }}" class="h-16" alt="">
-                <div>
+                <div class="">
                     <p class="text-xl">VIP1</p>
                     <p>Daily Transfer in limit: 10.00</p>
                     <p>Monthly transfer in limit: 30.00</p>
@@ -21,7 +23,7 @@
                     <p>Valid days: 90</p>
                 </div>
             </div>
-            <div class="bg-my-silver p-3 py-8 rounded-xl w-full flex justify-between text-sm">
+            <div class="bg-my-silver p-3 py-8 rounded-xl w-full flex justify-between text-sm max-sm:text-[10px]">
                 <img src="{{ asset('images/v2.png') }}" class="h-16" alt="">
                 <div>
                     <p class="text-xl">VIP1</p>
@@ -33,7 +35,7 @@
                     <p>Valid days: 90</p>
                 </div>
             </div>
-            <div class="bg-golden-yellow p-3 py-8 rounded-xl w-full flex justify-between text-sm">
+            <div class="bg-golden-yellow p-3 py-8 rounded-xl w-full flex justify-between text-sm max-sm:text-[10px]">
                 <img src="{{ asset('images/v3.png') }}" class="h-16" alt="">
                 <div>
                     <p class="text-xl">VIP1</p>
@@ -45,7 +47,7 @@
                     <p>Valid days: 90</p>
                 </div>
             </div>
-            <div class="bg-pale-blue p-3 py-8 rounded-xl w-full flex justify-between text-sm">
+            <div class="bg-pale-blue p-3 py-8 rounded-xl w-full flex justify-between text-sm max-sm:text-[10px]">
                 <img src="{{ asset('images/v4.png') }}" class="h-16" alt="">
                 <div>
                     <p class="text-xl">VIP1</p>
@@ -57,7 +59,7 @@
                     <p>Valid days: 90</p>
                 </div>
             </div>
-            <div class="bg-pale-yellow p-3 py-8 rounded-xl w-full flex justify-between text-sm">
+            <div class="bg-pale-yellow p-3 py-8 rounded-xl w-full flex justify-between text-sm max-sm:text-[10px]">
                 <img src="{{ asset('images/v5.png') }}" class="h-16" alt="">
                 <div>
                     <p class="text-xl">VIP1</p>

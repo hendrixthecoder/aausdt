@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deposit;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    public function renderWithdrawalsPage () {
+    public function renderWithdrawalsPage () : View {
         $withdrawals = Withdrawal::where('status', 'Pending')->get();
         return view('admin.withdrawals', compact(['withdrawals']));
     }
+
+    public function renderDepositsPage () : View {
+        $deposits = Deposit::where('status', 'Pending')->get();
+        return view('admin.deposits', compact(['deposits']));
+    }
+    
 }

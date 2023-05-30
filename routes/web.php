@@ -8,6 +8,7 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\FundsController;
 use App\Http\Controllers\User\UserActionController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,37 @@ use App\Http\Controllers\User\UserActionController;
 |
 */
 
+Route::get('test', function (){
+    return view('test');
+});
+
 Route::get('/', function (Request $request) {
 
     $email = env('MAIL_FROM_ADDRESS');
 
     //trick to set balance equal to zero for unauthenticated users
     $request->user() ? $balance = $request->user()->balance() : $balance = 0;
-    return view('welcome', compact(['balance','email']));
+
+    //trick to show display message
+    if(Auth::check()) {
+        $deposit = $request->user()->deposits()->latest('id')->first();
+        
+        if($deposit == null && $request->user()->hasRole('admin')){
+            $message = 'Hello Admin';
+        }else{
+
+            if($deposit->status == 'Processed') {
+                $message = 'Last deposit was approved!';
+    
+            }else if($deposit->status == 'Declined'){
+                $message = 'Last deposit was declined!';
+            }
+        }
+    }else {
+        $message = 'Welcome Guest!';
+    }
+
+    return view('welcome', compact(['balance','email','message']));
 })->name('userHome');
 
 Route::get('/login', [AuthController::class, 'renderLoginPage'])->name('userLoginPage');
@@ -56,11 +81,18 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/account-security', [PageController::class, 'secureAcccount'])->name('userSecureAccountPage');
 
+    //Admin routes
+
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function () {
         Route::get('/manage-withdrawals', [AdminPageController::class, 'renderWithdrawalsPage'])->name('adminManageWithdrawals');
 
+        Route::post('approve-withdrawal/{id}', [AdminActionController::class, 'approveWithdrawal'])->name('adminApproveWithdrawal');
+        Route::post('decline-withdrawal/{id}', [AdminActionController::class, 'declineWithdrawal'])->name('adminDeclineWithdrawal');
+
+        Route::get('manage-deposits', [AdminPageController::class, 'renderDepositsPage'])->name('renderAdminManageDeposits');
+
         Route::post('approve-deposit/{id}', [AdminActionController::class, 'approveDeposit'])->name('adminApproveDeposit');
-        Route::post('decline-withdrawal/{id}', [AdminActionController::class, 'declineDeposit'])->name('adminDeclineDeposit');
+        Route::post('decline-deposit/{id}', [AdminActionController::class, 'declineDeposit'])->name('adminDeclineDeposit');
     });
 });
 

@@ -82,16 +82,16 @@
 
                     </div>
                 </div>
-
+                {{-- edit wallet modal start --}}
                 <dialog id="modal{{ $wallet->id }}" class="w-10/12 rounded-md shadow bg-my-ash">
                     <span class="material-icons cursor-pointer text-white" onclick="closeModal()">close</span>
                     <form action="{{ route('putWalletAdd') }}" class="flex flex-col gap-4 my-3" method="post">
                         @csrf
                         @method('PUT')
                         <div class="flex justify-between gap-4 ">
-                            <label for="wallet_type" class="text-white mt-2">Wallet type:</label>
+                            <label for="wallet_type_edit{{ $wallet->id }}" class="text-white mt-2">Wallet type:</label>
             
-                            <select required name="wallet_address_type" id="wallet_type" class="bg-my-ash text-white flex-grow outline-none border p-2 rounded-md">
+                            <select required name="wallet_address_type" id="wallet_type_edit{{ $wallet->id }}" class="bg-my-ash text-white flex-grow outline-none border p-2 rounded-md">
                                 <option value="ERC20">ERC20</option>
                                 <option value="TRC20">TRC20</option>
                             </select>
@@ -102,6 +102,7 @@
                         <input type="submit" value="Save" class="bg-deep-blue rounded-md text-white p-2 cursor-pointer">
                     </form>
                 </dialog>
+                {{-- edit wallet modal end --}}
             @endforeach
         </div>
         @endif

@@ -19,11 +19,11 @@
         <a href="{{ route('userHome') }}">
             <span class="material-icons">arrow_back_ios</span>
         </a>
-        <p class="">Pending Withdrawals</p>
+        <p class="">Pending Deposits</p>
     </div>
     <div class="p-4">
-        @if ($withdrawals->isEmpty())
-            <div class="bg-my-ash p-4 rounded-md my-3">There are currently no pending withdrawals in the system!</div>
+        @if ($deposits->isEmpty())
+            <div class="bg-my-ash p-4 rounded-md my-3">There are currently no pending deposits in the system!</div>
         @else
 
         @if (Session::has('success'))
@@ -31,37 +31,38 @@
         @endif
 
         <div class="overflow-x">
-            <table class="border-gray-700 table w-full border my-4 bg-my-ash">
+            <table class="border-gray-700 w-full border my-4 bg-my-ash">
                 <tr class="border border-gray-700">
                     <th class="p-2 border-r border-gray-700">Amount</th>
                     <th class="p-2 border border-gray-700">Status</th>
-                    <td class="p-2 border border-gray-700">Payment Details</td>
                     <th class="p-2 border border-gray-700">Date</th>
                     <th class="p-2">Actions</th>
                 </tr>
                 <tbody class="text-center">
-                    @foreach ($withdrawals as $withdrawal)
+                    @foreach ($deposits as $deposit)
                         <tr>
-                            <td class="p-2">{{ $withdrawal->amount }}</td>
-                            <td class="p-2">{{ $withdrawal->status }}</td>
-                            <td class="p-2 ">{{ $withdrawal->wallet }}</td>
-                            <td class="p-2">{{ $withdrawal->created_at }}</td>
+                            <td class="p-2">{{ $deposit->amount }}</td>
+                            <td class="p-2">{{ $deposit->status }}</td>
+                            <td class="p-2">{{ $deposit->created_at }}</td>
                             <td class="p-2">
-                                <button data-modal-id="{{ $withdrawal->id }}" onclick="openEachModal()" class="bg-blue-700 p-1 px-2 rounded-md text-sm flex gap-1" >
+                                <button data-modal-id="{{ $deposit->id }}" onclick="openEachModal()" class="bg-blue-700 p-1 px-2 rounded-md text-sm flex gap-1" >
                                     Actions
                                     <span class="material-icons" style="font-size: 20px">visibility</span>
                                 </button>
                             </td>
-                            <dialog class="rounded-md text-white w-9/12 bg-my-ash p-4" id="modal{{ $withdrawal->id }}">
+                            <dialog class="rounded-md text-white w-9/12 bg-my-ash p-4" id="modal{{ $deposit->id }}">
                                 <div class="flex justify-end">
                                     <span class="material-icons cursor-pointer" onclick="closeEachModal()">close</span>
                                 </div>
+                                <div class="w-full h-auto my-5">
+                                    <img src="/storage/{{ $deposit->path }}" alt="">
+                                </div>
                                 <div class="flex gap-4">
-                                    <form action="{{ route('adminApproveWithdrawal', ['id' => $withdrawal->id]) }}" method="post">
+                                    <form action="{{ route('adminApproveDeposit', ['id' => $deposit->id]) }}" method="post">
                                         @csrf
                                         <input type="submit" class="bg-green-700 p-2 rounded-md cursor-pointer" value="Approve">
                                     </form>
-                                    <form action="{{ route('adminDeclineWithdrawal', ['id' => $withdrawal->id ]) }}" method="post">
+                                    <form action="{{ route('adminDeclineDeposit', ['id' => $deposit->id ]) }}" method="post">
                                         @csrf
                                         <input type="submit" class="bg-red-700 p-2 rounded-md cursor-pointer" value="Decline">
                                     </form>

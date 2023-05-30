@@ -1,8 +1,11 @@
+import { space } from 'postcss/lib/list';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -16,9 +19,14 @@ export default {
         'bright-purple': '#3B24BF',
         'deep-blue': '#1219AF',
         'deeper-blue': '#0F148C'
+      },
+      spacing: {
+        '30' : '30px'
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 

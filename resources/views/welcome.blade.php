@@ -7,6 +7,7 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
     @vite('resources/css/app.css')
     <style>
         dialog::backdrop {
@@ -14,20 +15,21 @@
         }
     </style>
 </head>
-<body class="text-white">
+<body class="text-white bg-black">
     <div class="flex flex-col h-screen">
         <nav class="flex justify-between p-5 bg-black text-white">
             <div class="">
                 <img src="{{ asset('images/logo.png') }}" class="h-10 inline" alt="">
                 <span>AAUSDT</span>
             </div>
-            <div class="max-sm:hidden">
-                <a href="">Home</a>
-                <a href="">Financing</a>
-                <a href="">VIP</a>
-                <a href="">Account</a>
+            <div class="max-lg:hidden flex gap-5">
+                <a data-id="homeBtn">Home</a>
+                <a data-id="financingBtn">Financing</a>
+                <a data-id="vipBtn">VIP</a>
+                <a data-id="accountBtn">Account</a>
             </div>
         </nav>
+        
         {{-- Includes start --}}
         @include('financing')
         @include('vip')
@@ -35,7 +37,45 @@
             @include('account')
         @endif
         {{-- Includes end --}}
-        <section class="flex-grow p-4 bg-black" id="home"> 
+        <section class="flex-grow p-4 bg-black" id="home">
+            <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                <!-- Carousel wrapper -->
+                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                     <!-- Item 1 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('images/slide1.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('images/slide2.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="{{ asset('images/slide3.jpeg') }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    </div>
+            
+                </div>
+                <!-- Slider indicators -->
+                <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                    
+                </div>
+                <!-- Slider controls -->
+                <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
+            </div> 
             <section id="financing-port">
                 {{-- Financing starts here --}}
                 <div class="flex justify-between text-white mb-3">
@@ -46,14 +86,14 @@
                     <div class="bg-my-ash  h-28 rounded-lg p-3">
                         <div class="flex">
                             <img src="{{ asset('images/logo.png') }}" class="h-8 " alt="">
-                            <span class="pl-2">USDT 120 Days</span>
+                            <span class="pl-2 max-sm:text-[10px]">USDT 120 Days</span>
                         </div>
                         <p><span class="font-bold text-lg">63.5%</span> yield</p>
                     </div>
                     <div class="bg-my-ash  h-28 rounded-lg p-3">
                         <div class="flex">
                             <img src="{{ asset('images/logo.png') }}" class="h-8" alt="">
-                            <span class="pl-2">USDT 90 Days</span>
+                            <span class="pl-2 max-sm:text-[10px]">USDT 90 Days</span>
                         </div>
                         <p><span class="font-bold text-lg">53.8%</span> yield</p>
                     </div>
@@ -61,7 +101,7 @@
                     <div class="bg-my-ash h-28 rounded-lg p-3">
                         <div class="flex">
                             <img src="{{ asset('images/logo.png') }}" class="h-8" alt="">
-                            <span class="pl-2">USDT 60 Days</span>
+                            <span class="pl-2 max-sm:text-[10px]">USDT 60 Days</span>
                         </div>
                         <p><span class="font-bold text-lg">30.6%</span> yield</p>
                     </div>
@@ -118,28 +158,46 @@
 
 
         </section>
-        <div id="mobile-nav" class="sm:hidden flex justify-between p-5 pt-3 border-t shadwo-sm sticky bottom-0 mb-4 left-0 mg:hidden lg:hidden h-20 bg-black text-white w-full">
-            <span class="cursor-pointer hover:text-blue-700 nav" id="homeBtn">
+        <div id="mobile-nav" class="flex justify-between p-5 pt-3 border-t sticky bottom-0 mb-4 left-0 h-20 bg-black text-white w-full lg:hidden md:mb-0 ">
+            <span class="cursor-pointer hover:text-blue-700 nav" data-id="homeBtn" id="homeBtn">
                 <span class="material-icons block ml-2">home</span>
                 Home
             </span>
-            <span class="cursor-pointer hover:text-blue-700 nav" id="financingBtn">
+            <span class="cursor-pointer hover:text-blue-700 nav" data-id="financingBtn" id="financingBtn">
                 <span class="material-icons block ml-5">account_balance_wallet</span>
                 Financing
             </span>
-            <span class="cursor-pointer hover:text-blue-700 nav" id="vipBtn">
+            <span class="cursor-pointer hover:text-blue-700 nav" data-id="vipBtn" id="vipBtn">
                 <span class="material-icons block ">military_tech</span>
                 VIP
             </span>
             @if (Auth::check())
-            <span class="cursor-pointer hover:text-blue-700 nav" id="accountBtn">
+            <span class="cursor-pointer hover:text-blue-700 nav" data-id="accountBtn" id="accountBtn">
                 <span class="material-icons block ml-5">account_circle</span>
                 Account
             </span>   
             @endif
         </div>
-        <footer class="max-sm:hidden bg-gray-700" >
-            laptop footer
+        <footer class="max-lg:hidden bg-black border-t border-white p-4 " >
+            <div class="grid grid-cols-3 place-items-center gap-40   ">
+                <div class="flex flex-col gap-5 md:ml-20">
+                    <h3>Financial Income Platform</h3>
+                    <div class="flex gap-5 ">
+                        <p data-id="homeBtn">Home</p>
+                        <p data-id="financingBtn">Financing</p>
+                        <p data-id="vipBtn">VIP</p>
+                        <p data-id="accountBtn">Account</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <h3>Online Service</h3>
+                    <h3>Telegram Communication</h3>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <h3>Customer Service Email</h3>
+                    <h3>{{ $email }}</h3>
+                </div>
+            </div>
         </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
@@ -151,25 +209,25 @@
             $('#financing').hide()
             $('#account').hide()
 
-            $('#homeBtn').click(function () {
+            $('[data-id=homeBtn]').click(function () {
                 $('#financing').hide()
                 $('#vip').hide()
                 $('#account').hide()
                 $('#home').show()
             })
-            $('#financingBtn').click(function () {
+            $('[data-id=financingBtn]').click(function () {
                 $('#home').hide()
                 $('#vip').hide()
                 $('#account').hide()
                 $('#financing').show()
             })
-            $('#vipBtn').click(function () {
+            $('[data-id=vipBtn]').click(function () {
                 $('#home').hide()
                 $('#financing').hide()
                 $('#account').hide()
                 $('#vip').show()
             })
-            $('#accountBtn').click(function () {
+            $('[data-id=accountBtn]').click(function () {
                 $('#home').hide()
                 $('#financing').hide()
                 $('#vip').hide()
@@ -180,5 +238,6 @@
 
 
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 </html>

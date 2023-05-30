@@ -6,7 +6,9 @@
                 <p class="text-orange-500">{{ $balance }} ≈ ${{ $balance }}</p>
                 <p>Balance</p>
             </div>
-            <a class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10" href="{{ route('userLoginPage') }}">Login</a>
+            @if (!Auth::check())
+                <a class="bg-blue-700 h-10 px-2 rounded-md text-white leading-10" href="{{ route('userLoginPage') }}">Login</a>
+            @endif
         </div>
         <div class="my-2">
             <p>Products</p>

@@ -52,7 +52,7 @@
                 <label for="amount" class="mt-3">Trade Key:</label>
                 <div class="flex-grow">
                     <span class="material-icons text-base absolute pointer-events-none mt-3 ml-2">lock</span>
-                    <input type="text" name="trade_key" placeholder="Please input your trade key" class="p-3 w-full rounded-md flex-grow pl-8 outline-none bg-my-ash ">
+                    <input type="password" name="trade_key" placeholder="Please input your trade key" class="p-3 w-full rounded-md flex-grow pl-8 outline-none bg-my-ash ">
                 </div>
             </div>
             <input type="submit" value="Confirm" class="w-full bg-deep-blue p-2 rounded-md cursor-pointer">

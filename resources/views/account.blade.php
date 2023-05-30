@@ -12,17 +12,17 @@
                 </div>
             </div>
             <div class="border-b-[0.1px] border-gray-400"></div>
-            <div class="flex gap-7 my-5 mb-10 justify-center text-xs">
+            <div class="flex gap-7 max-sm:gap-2 my-5 mb-10 justify-center text-xs">
                 <div class="flex flex-col text-center">
                     <p class="text-orange-400"><span class="text-lg">0</span> USDT</p>
-                    <p>Today transfer in limit</p>
+                    <p class="max-sm:text-[10px]">Today transfer in limit</p>
                 </div>
 
                 <div class="border-r-[0.1px] border-gray-400 h-12"></div>
 
                 <div class="flex flex-col text-center">
                     <p class="text-orange-400"><span class="text-lg">0</span> USDT</p>
-                    <p>Monthly transfer in limit</p>
+                    <p class="max-sm:text-[10px]">Monthly transfer in limit</p>
                 </div>
             </div>
         </div>
@@ -58,59 +58,70 @@
                 @if (Auth::user()->hasRole('admin'))
                     <p>Hello Admin!</p>
                 @else
-                <p>Your deposit has been refused</p>
+                <p>{{ $message }}</p>
                 @endif
             </div>
             <div class="my-5">
                 <h3>Other Services</h3>
                 <div class="my-3 rounded-md bg-my-ash w-full grid grid-cols-4 p-4 gap-5">
-                    <div class="text-center cursor-pointer">
-                        <span class="material-icons text-deep-blue">account_balance_wallet</span>
-                        <p class="text-xs">Financing</p>
-                    </div>
-                    <div class="text-center cursor-pointer">
-                        <span class="material-icons text-deep-blue">person</span>
-                        <p class="text-xs">Security</p>
-                    </div>
-                    <div class="text-center cursor-pointer">
-                        <span class="material-icons text-deep-blue">notifications</span>
-                        <p class="text-xs">Message</p>
-                    </div>
-                    <div class="text-center cursor-pointer" onclick="showContactModal()">
-                        <span class="material-icons text-deep-blue">headset_mic</span>
-                        <p class="text-xs">Contact</p>
-                    </div>
-
-                    <dialog class="w-9/12 p-4 bg-my-ash text-white rounded-md" id="contact-modal">
-                        <div class="flex justify-between my-2">
-                            <h2 class="text-lg">Contact</h2>
-                            <span class="material-icons text-black cursor-pointer" onclick="hideContactModal()">close</span>
-                        </div>
-                        <div class="my-2">Please send email to: {{ $email }} </div>
-                        <div class="flex justify-end">
-                            <button class="bg-blue-500 rounded-md p-2 text-xs" onclick="hideContactModal()">Confirm</button>
-                        </div>
-                    </dialog>
-
-                    <div class="text-center cursor-pointer">
-                        <a href="{{ route('userQuestionsPage') }}" class="text-xs block">
-                            <span class="material-icons text-deep-blue">help</span>
-                            <p class="text-xs">Questions</p>
+                    @if (Auth::user()->hasRole('admin'))
+                        <a href="{{ route('adminManageWithdrawals') }}" class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">account_balance_wallet</span>
+                            <p class="text-xs">Withdrawals</p>
                         </a>
-                    </div>
-                    <div class="text-center cursor-pointer">
-                        <a href="{{ route('userWalletsPage') }}" class="text-xs block">
-                            <span class="material-icons text-deep-blue">wallet</span>
-                            <p class="text-xs">Wallet</p>
+                        <a href="{{ route('renderAdminManageDeposits') }}" class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">account_balance_wallet</span>
+                            <p class="text-xs">Deposits</p>
                         </a>
-                    </div>
-                    <form action="{{ route('logUserOut') }}" id="logout" method="post" class="hidden">
-                        @csrf
-                    </form>
-                    <button  class="text-center cursor-pointer" onclick="document.getElementById('logout').submit()">
-                        <span class="material-icons text-deep-blue">power_settings_new</span>
-                        <p class="text-xs">Logout</p>
-                    </button>
+                    @else
+                        <div class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">account_balance_wallet</span>
+                            <p class="text-xs">Financing</p>
+                        </div>
+                        <div class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">person</span>
+                            <p class="text-xs">Security</p>
+                        </div>
+                        <div class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">notifications</span>
+                            <p class="text-xs">Message</p>
+                        </div>
+                        <div class="text-center cursor-pointer" onclick="showContactModal()">
+                            <span class="material-icons text-deep-blue">headset_mic</span>
+                            <p class="text-xs">Contact</p>
+                        </div>
+
+                        <dialog class="w-9/12 p-4 bg-my-ash text-white rounded-md" id="contact-modal">
+                            <div class="flex justify-between my-2">
+                                <h2 class="text-lg">Contact</h2>
+                                <span class="material-icons text-black cursor-pointer" onclick="hideContactModal()">close</span>
+                            </div>
+                            <div class="my-2">Please send email to: {{ $email }} </div>
+                            <div class="flex justify-end">
+                                <button class="bg-blue-500 rounded-md p-2 text-xs" onclick="hideContactModal()">Confirm</button>
+                            </div>
+                        </dialog>
+
+                        <div class="text-center cursor-pointer">
+                            <a href="{{ route('userQuestionsPage') }}" class="text-xs block">
+                                <span class="material-icons text-deep-blue">help</span>
+                                <p class="text-xs">Questions</p>
+                            </a>
+                        </div>
+                        <div class="text-center cursor-pointer">
+                            <a href="{{ route('userWalletsPage') }}" class="text-xs block">
+                                <span class="material-icons text-deep-blue">wallet</span>
+                                <p class="text-xs">Wallet</p>
+                            </a>
+                        </div>
+                        <form action="{{ route('logUserOut') }}" id="logout" method="post" class="hidden">
+                            @csrf
+                        </form>
+                        <button  class="text-center cursor-pointer" onclick="document.getElementById('logout').submit()">
+                            <span class="material-icons text-deep-blue">power_settings_new</span>
+                            <p class="text-xs">Logout</p>
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
