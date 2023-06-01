@@ -16,6 +16,11 @@ class Wallet extends Model
         'user_id',
     ];
 
+    protected $hidden = [
+        'user_id',
+        'updated_at',
+    ];
+
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
     }

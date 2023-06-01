@@ -15,12 +15,13 @@
     </style>
 </head>
 <body class="bg-black text-white">
+    {{-- create new walet modal starts here --}}
     <dialog class="w-10/12 rounded-md shadow bg-my-ash" id="modal">
         <button id="closeModal" class=" text-white rounded-md">
             <span class="material-icons">close</span>
         </button>
 
-        <form action="{{ route('postWalletAdd') }}" class="flex flex-col gap-4 my-3" method="post">
+        <form action="{{ route('postWalletAdd') }}" class="flex flex-col gap-4 my-3" id="createWallet" method="post">
             @csrf
             <div class="flex justify-between gap-4 ">
                 <label for="wallet_type" class="text-white mt-2">Wallet type:</label>
@@ -35,6 +36,8 @@
             <input type="submit" value="Save" class="bg-deep-blue rounded-md text-white p-2 cursor-pointer">
         </form>
     </dialog>
+    {{-- create new walet modal ends here --}}
+
 
     <div class="w-full p-2 border-b border-gray-400 flex justify-between ">
         <a href="{{ route('userHome') }}"><span class="material-icons">arrow_back_ios</span></a>
@@ -125,7 +128,6 @@
                 e.preventDefault()
                 modal.close();
             })
-
         })
 
         const openModal = () => {
@@ -145,6 +147,9 @@
             let formId = event.target.parentElement.id
             console.log(formId);
         }
+
+
+        
     </script>
 </body>
 </html>

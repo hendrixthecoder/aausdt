@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         dialog::backdrop {
             background-color: rgba(0, 0, 0, 0.5)
@@ -76,7 +76,7 @@
                     </span>
                 </button>
             </div> 
-            <section id="financing-port">
+            <section id="financing-port" class="mt-4">
                 {{-- Financing starts here --}}
                 <div class="flex justify-between text-white mb-3">
                     <h4 class="font-semibold border-l-2 border-blue-700 pl-2">Financing</h4>
@@ -153,9 +153,41 @@
                     <div class="bg-my-ash text-center border-r p-2">Amount</div>
                     <div class="bg-my-ash text-center p-2">Date</div>
                 </div>
-
+                <marquee behavior="scroll" class="bg-my-ash h-44" scrollamount="4" direction="up">
+                    <div class="grid grid-cols-3" id="board">
+                        <div class="bg-my-ash text-center p-2">jn*****ig</div>
+                        <div class="bg-my-ash text-center p-2">1212.0</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">39028.90</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">5345345</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">25</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">2321</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">34242</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">34134</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">13413</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">62424</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                        <div class="bg-my-ash text-center p-2">Username</div>
+                        <div class="bg-my-ash text-center p-2">24524</div>
+                        <div class="bg-my-ash text-center p-2">Date</div>
+                    </div>
+                </marquee>
             </section>
-
 
         </section>
         <div id="mobile-nav" class="flex justify-between p-5 pt-3 border-t sticky bottom-0 mb-4 left-0 h-20 bg-black text-white w-full lg:hidden md:mb-0 ">
@@ -215,24 +247,46 @@
                 $('#account').hide()
                 $('#home').show()
             })
+
             $('[data-id=financingBtn]').click(function () {
                 $('#home').hide()
                 $('#vip').hide()
                 $('#account').hide()
                 $('#financing').show()
             })
+
             $('[data-id=vipBtn]').click(function () {
                 $('#home').hide()
                 $('#financing').hide()
                 $('#account').hide()
                 $('#vip').show()
             })
+
             $('[data-id=accountBtn]').click(function () {
                 $('#home').hide()
                 $('#financing').hide()
                 $('#vip').hide()
                 $('#account').show()
             })
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('getRand') }}",
+                dataType: "JSON",
+                success: function (response) {
+                    $('#board').html('')
+                    let { data } = response.data
+                    console.log(data);
+                    $.each(response.data, function (key, value) { 
+                         $('#board').append(
+                            `<div class="bg-my-ash text-center p-2">${value.name}</div>
+                            <div class="bg-my-ash text-center p-2">${value.amount}</div>
+                            <div class="bg-my-ash text-center p-2">${value.today}</div>
+                            `
+                        )
+                    });
+                }
+            });
 
         });
 

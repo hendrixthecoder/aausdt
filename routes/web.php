@@ -9,6 +9,7 @@ use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\FundsController;
 use App\Http\Controllers\User\UserActionController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('test', function (){
     return view('test');
 });
 
+Route::get('rand', [PageController::class, 'getRand'])->name('getRand');
+
 Route::get('/', function (Request $request) {
 
     $email = env('MAIL_FROM_ADDRESS');
@@ -38,14 +41,14 @@ Route::get('/', function (Request $request) {
         
         if($deposit == null && $request->user()->hasRole('admin')){
             $message = 'Hello Admin';
-        }else{
+        }else if($deposit) {
 
-            if($deposit->status == 'Processed') {
-                $message = 'Last deposit was approved!';
-    
-            }else if($deposit->status == 'Declined'){
-                $message = 'Last deposit was declined!';
-            }
+            $deposit->status = 'Processed' ? $message = 'Last message was approved' 
+                                            : $message = 'Last message was declined';
+
+        }
+        else{
+            $message = 'Hello there!';
         }
     }else {
         $message = 'Welcome Guest!';
@@ -93,6 +96,11 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::post('approve-deposit/{id}', [AdminActionController::class, 'approveDeposit'])->name('adminApproveDeposit');
         Route::post('decline-deposit/{id}', [AdminActionController::class, 'declineDeposit'])->name('adminDeclineDeposit');
+
+        Route::get('/payment-details', [AdminPageController::class, 'renderPaymentDetailsPage'])->name('adminManagePaymentDetails');
+        Route::post('/payment-details', [AdminActionController::class, 'createPaymentDetail'])->name('adminCreatePaymentDetail');
+        Route::put('/payment-details/{id}', [AdminActionController::class, 'putPaymentDetail'])->name('adminPutPaymentDetail');
+
     });
 });
 

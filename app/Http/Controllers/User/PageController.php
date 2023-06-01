@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentDetails;
+use App\Models\Rand;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,8 @@ class PageController extends Controller
 
     public function renderDepositsPage (Request $request) {
         $deposits = $request->user()->deposits;
-        return view('deposits', compact(['deposits']));
+        $details = PaymentDetails::all();
+        return view('deposits', compact(['deposits', 'details']));
     }
 
     public function renderWithdrawalsPage (Request $request) : View {
@@ -33,5 +36,11 @@ class PageController extends Controller
     public function renderTransferPage (Request $request) : View {
         $balance = $request->user()->balance();
         return view('transfer', compact(['balance']));
+    }
+
+    public function getRand () {
+        return response()->json([
+            'data' => Rand::all()
+        ]);
     }
 }

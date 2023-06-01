@@ -73,6 +73,10 @@
                             <span class="material-icons text-deep-blue">account_balance_wallet</span>
                             <p class="text-xs">Deposits</p>
                         </a>
+                        <a href="{{ route('adminManagePaymentDetails') }}" class="text-center cursor-pointer">
+                            <span class="material-icons text-deep-blue">account_balance_wallet</span>
+                            <p class="text-xs">Payment Details</p>
+                        </a>
                     @else
                         <div class="text-center cursor-pointer">
                             <span class="material-icons text-deep-blue">account_balance_wallet</span>

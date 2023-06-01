@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Rand;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -37,6 +37,10 @@ class UserSeeder extends Seeder
         ]);
 
         $user->assignRole('admin');
+
+        Rand::factory(30)->create();
+
+        
 
     }
 }
