@@ -23,8 +23,11 @@ use Illuminate\Support\Facades\Validator;
 */
 
 Route::get('test', function (){
-    return view('test');
+    $collect = collect(['BTC', 'ETH', 'USDT']);
+    dd($collect->random());
 });
+
+Route::get('get-currencies', [PageController::class, 'getCurrencies'])->name('currencies');
 
 Route::get('rand', [PageController::class, 'getRand'])->name('getRand');
 

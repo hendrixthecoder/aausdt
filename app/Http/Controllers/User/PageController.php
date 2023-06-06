@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currencies;
 use App\Models\PaymentDetails;
 use App\Models\Rand;
 use Illuminate\Contracts\View\View;
@@ -41,6 +42,14 @@ class PageController extends Controller
     public function getRand () {
         return response()->json([
             'data' => Rand::all()
+        ]);
+    }
+
+    public function getCurrencies () {
+        return response()->json([
+            'btc' => Currencies::where('name', 'BTC')->inRandomOrder()->first(),
+            'eth' => Currencies::where('name', 'ETH')->inRandomOrder()->first(),
+            'usdt' => Currencies::where('name', 'USDT')->inRandomOrder()->first()
         ]);
     }
 }

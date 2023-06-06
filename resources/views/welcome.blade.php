@@ -22,11 +22,13 @@
                 <img src="{{ asset('images/logo.png') }}" class="h-10 inline" alt="">
                 <span>AAUSDT</span>
             </div>
-            <div class="max-lg:hidden flex gap-5">
-                <a data-id="homeBtn">Home</a>
-                <a data-id="financingBtn">Financing</a>
-                <a data-id="vipBtn">VIP</a>
-                <a data-id="accountBtn">Account</a>
+            <div class="max-lg:hidden flex gap-5 ">
+                <a data-id="homeBtn" class="cursor-pointer hover:text-deep-blue">Home</a>
+                <a data-id="financingBtn" class="cursor-pointer hover:text-deep-blue">Financing</a>
+                <a data-id="vipBtn" class="cursor-pointer hover:text-deep-blue">VIP</a>
+                @if (Auth::check())
+                    <a data-id="accountBtn" class="cursor-pointer hover:text-deep-blue">Account</a>
+                @endif
             </div>
         </nav>
         
@@ -80,7 +82,7 @@
                 {{-- Financing starts here --}}
                 <div class="flex justify-between text-white mb-3">
                     <h4 class="font-semibold border-l-2 border-blue-700 pl-2">Financing</h4>
-                    <h4 class="flex cursor-pointer"><span class="material-icons">add_circle</span>More</h4>
+                    <h4 class="flex cursor-pointer" data-id="financingBtn"><span class="material-icons">add_circle</span>More</h4>
                 </div>
                 <div class="grid grid-cols-3 gap-2 max-sm:text-sm">
                     <div class="bg-my-ash  h-28 rounded-lg p-3">
@@ -117,26 +119,20 @@
                 <div class="flex flex-col gap-1">
                     <div class="bg-my-ash w-full h-16 rounded-lg p-3 flex gap-2">
                         <img src="{{ asset('images/btc.jpeg') }}" class="h-10" alt="">
-                        <div class="flex justify-between w-full leading-10">
-                            <p>BTC/<span class="text-xs">USDT</span></p>
-                            <p>$265670.56</p>
-                            <p>-0.01%</p>
+                        <div class="flex justify-between w-full leading-10" id="btc-board">
+
                         </div>
                     </div>
                     <div class="bg-my-ash w-full h-16 rounded-lg p-3 flex gap-2">
                         <img src="{{ asset('images/eth.png') }}" class="h-10" alt="">
-                        <div class="flex justify-between w-full leading-10">
-                            <p>ETH/<span class="text-xs">USDT</span></p>
-                            <p>$265670.56</p>
-                            <p>-0.01%</p>
+                        <div class="flex justify-between w-full leading-10" id="eth-board">
+
                         </div>
                     </div>
                     <div class="bg-my-ash w-full h-16 rounded-lg p-3 flex gap-2">
                         <img src="{{ asset('images/logo.png') }}" class="h-10" alt="">
-                        <div class="flex justify-between w-full leading-10">
-                            <p>BTC/<span class="text-xs">USDT</span></p>
-                            <p>$265670.56</p>
-                            <p>-0.01%</p>
+                        <div class="flex justify-between w-full leading-10" id="usdt-board">
+
                         </div>
                     </div>
                 </div>
@@ -215,10 +211,12 @@
                 <div class="flex flex-col gap-5 md:ml-20">
                     <h3>Financial Income Platform</h3>
                     <div class="flex gap-5 ">
-                        <p data-id="homeBtn">Home</p>
-                        <p data-id="financingBtn">Financing</p>
-                        <p data-id="vipBtn">VIP</p>
-                        <p data-id="accountBtn">Account</p>
+                        <p data-id="homeBtn" class="cursor-pointer hover:text-deep-blue">Home</p>
+                        <p data-id="financingBtn" class="cursor-pointer hover:text-deep-blue">Financing</p>
+                        <p data-id="vipBtn" class="cursor-pointer hover:text-deep-blue">VIP</p>
+                        @if (Auth::check())
+                            <p data-id="accountBtn" class="cursor-pointer hover:text-deep-blue">Account</p>
+                        @endif
                     </div>
                 </div>
                 <div class="flex flex-col gap-5">
@@ -235,7 +233,81 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 
     <script>
+        
         $(document).ready(function () {
+
+            setInterval(() => {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('currencies') }}",
+                    dataType: "JSON",
+                    success: function (response) {
+
+                        const { btc, eth, usdt } = response;
+                        
+                        $('#btc-board').html('')
+                        $('#eth-board').html('')
+                        $('#usdt-board').html('')
+    
+                        $('#btc-board').append(`
+                            <p>${btc.name}/<span class="text-xs">${btc.name}</span></p>
+                            <p class="text-green-700">$${btc.amount}</p>
+                            <p class="text-red-700">-${btc.percentage}%</p>
+                        `)
+    
+                        $('#eth-board').append(`
+                            <p>${eth.name}/<span class="text-xs">${eth.name}</span></p>
+                            <p class="text-green-700">$${eth.amount}</p>
+                            <p class="text-green-700">+${eth.percentage}%</p>
+                        `)
+    
+                        $('#usdt-board').append(`
+                            <p>${usdt.name}/<span class="text-xs">${usdt.name}</span></p>
+                            <p class="text-red-700">$${usdt.amount}</p>
+                            <p class="text-red-700">-${usdt.percentage}%</p>
+                        `)
+                        
+                    }
+                });
+            }, 2000);
+
+            const getCurrencies = () =>{
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('currencies') }}",
+                    dataType: "JSON",
+                    success: function (response) {
+                        const { btc, eth, usdt } = response;
+                        $('#btc-board').html('')
+                        $('#eth-board').html('')
+                        $('#usdt-board').html('')
+    
+                        $('#btc-board').append(`
+                            <p>${btc.name}/<span class="text-xs">${btc.name}</span></p>
+                            <p>$${btc.amount}</p>
+                            <p>${btc.percentage}%</p>
+                        `)
+    
+                        $('#eth-board').append(`
+                            <p>${eth.name}/<span class="text-xs">${eth.name}</span></p>
+                            <p>$${eth.amount}</p>
+                            <p>${eth.percentage}%</p>
+                        `)
+    
+                        $('#usdt-board').append(`
+                            <p>${usdt.name}/<span class="text-xs">${usdt.name}</span></p>
+                            <p>$${usdt.amount}</p>
+                            <p>${usdt.percentage}%</p>
+                        `)
+                        
+                    }
+                });
+            }
+
+            getCurrencies()
+
+
             $('#home').show()
             $('#vip').hide()
             $('#financing').hide()
@@ -276,7 +348,6 @@
                 success: function (response) {
                     $('#board').html('')
                     let { data } = response.data
-                    console.log(data);
                     $.each(response.data, function (key, value) { 
                          $('#board').append(
                             `<div class="bg-my-ash text-center p-2">${value.name}</div>
